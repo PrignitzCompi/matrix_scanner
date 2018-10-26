@@ -1,50 +1,38 @@
-const http = require('http'),
-      net = require('net');
+const net = require('net');
+const { Pool, Client } = require('pg')
 
-const HTTP_PORT = 5000;
-const TCP_PORT  = 5001;
+const pool = new Pool({
+  user: 'matrix_user',
+  host: 'localhost',
+  database: 'matrix_db',
+  password: 'matrix',
+  port: 5432,
+})
 
-class List {
+const MATRIX_PORT  = 5001;
 
-    get msg (){
-
-        let oldest_message_data = Number.MAX_SAFE_INTEGER;
-        for(let date in this.msg_list){
-            if(msg.date > this.msg_list[date]) msg.date = date;
-        }
-        
-        let oldest_message_data
-
-        let msg;
-        return 
-    }
-
-    set msg ( msg ){
-        msg_list[msg.date] = msg;
-    }
-}
-
-const msg_list = [];
-
-const http_server = http.createServer(()=>{});
-
-const tcp_server = net.createServer( socket => {
+const matrix_server = net.createServer( socket => {
     socket.on('data', data => {
         let date = Date.now();
         let msg = JSON.parse(data);
-        msg.date = date;
+        msg.timestamp = date;
         
         console.log(msg);
+        insert(msg);
+
     });
     socket.end();
 });
 
+function insert(msg){
+    pool.query('INSERT into matrix_schema.matrix_table (id_scanner, id_good_read, code, timestamp) VALUES ($1,$2,$3,$4)',
+               [msg.id_scanner,msg.id_good_read,msg.code,msg.timestamp], (err,result) => {
+        if(err){
+            console.log(err);
+        }
+    });
+}
 
-
-http_server.listen(HTTP_PORT, () => {
-    console.log(`http listening on ${HTTP_PORT}`);
-});
-
-tcp_server.listen(TCP_PORT, () => {
-    console.log(`tcp listening on ${TCP_PORT}`);
+matrix_server.listen(MATRIX_PORT, () => {
+    console.log(`matrix_server listening on ${MATRIX_PORT}`);
 });
