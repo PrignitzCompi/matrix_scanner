@@ -11,8 +11,14 @@
     "Matrix"
   ],
   "author": "Sören Lembke",
-  "license": "UNLICENSED",
+  "email": "soeren.lembke@prignitz-compi.de",
+  "homepage": "https://prignitz-compi.de",
+  "repository": {
+    "type" : "git",
+    "url" : "https://github.com/PrignitzCompi/matrix_scanner"
+  },
+  "license": "MIT",
   "dependencies": {
     "pg": "^7.5.0"
-  }
+  }  
 }
