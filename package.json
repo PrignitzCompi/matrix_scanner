@@ -1,0 +1,18 @@
+{
+  "name": "matrix.js",
+  "version": "0.0.1",
+  "description": "Matrix Scanner bridge to PostgreSQL",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "Matrix"
+  ],
+  "author": "Sören Lembke",
+  "license": "UNLICENSED",
+  "dependencies": {
+    "pg": "^7.5.0"
+  }
+}
